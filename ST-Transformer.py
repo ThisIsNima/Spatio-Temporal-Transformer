@@ -39,9 +39,9 @@ class ScaledDotProductAttention(nn.Module):
 
 
 
-class SMultiHeadAttention(nn.Module):
+class SpatialMultiHeadAttention(nn.Module):
     def __init__(self, embed_size, heads):
-        super(SMultiHeadAttention, self).__init__()
+        super(SpatialMultiHeadAttention, self).__init__()
 
         self.embed_size = embed_size
         self.heads = heads
