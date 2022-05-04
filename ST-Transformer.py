@@ -158,7 +158,7 @@ class STransformer(nn.Module):
         # Spatial Embedding part
         # N, T, C = query.shape
         # D_S = self.embed_liner(self.D_S) # [N, C]
-        # D_S = D_S.expand(T, N, C) #[T, N, C]相当于在第一维复制了T份
+        # D_S = D_S.expand(T, N, C) #[T, N, C]
         # D_S = D_S.permute(1, 0, 2) #[N, T, C]
 
 
@@ -177,7 +177,7 @@ class STransformer(nn.Module):
         # B:50, N:116,  T:25, C:64
         # [B, N, T, C] 50, 64, 25, 64
         # D_S = self.embed_liner(self.D_S) # [N, C] # 64 by 64
-        # D_S = D_S.expand(B, T, N, C) #[B, T, N, C]相当于在第2维复制了T份, 第一维复制B份
+        # D_S = D_S.expand(B, T, N, C) #[B, T, N, C]
         # D_S = D_S.permute(0, 2, 1, 3) #[B, N, T, C] # 50, 64, 25, 64 in this case of adj = 64 by 64
 
 
