@@ -176,13 +176,12 @@ class STransformer(nn.Module):
 
 
         # Adjacency Matrix Linear Embedding
-        #import pdb; pdb.set_trace()
 
         # D_S -> torch.Size([25, 64])
         # self.D_S -> torch.Size([25, 25])
         # embed_size = 64
         # Therefore, embed_liner is a single layer feed forward network with size 25 for each input sample and size 64 for each output
-        #import pdb; pdb.set_trace()
+
 
 
 
@@ -191,7 +190,6 @@ class STransformer(nn.Module):
         # B:50, N:116,  T:25, C:64
         # [B, N, T, C] 50, 64, 25, 64
         # D_S = self.embed_liner(self.D_S) # [N, C] # 64 by 64
-        # pdb.set_trace()
         # D_S = D_S.expand(B, T, N, C) #[B, T, N, C]相当于在第2维复制了T份, 第一维复制B份
         # D_S = D_S.permute(0, 2, 1, 3) #[B, N, T, C] # 50, 64, 25, 64 in this case of adj = 64 by 64
 
@@ -219,7 +217,7 @@ class STransformer(nn.Module):
 
             M = M + 1
 
-        #pdb.set_trace() # D_S2 is the new adjaceency matrix: 1198, 64, 25, 64
+        # D_S2 is the new adjaceency matrix: 1198, 64, 25, 64
         # adj1= 64* 64
         # permute= 64 * 25 * 64
         # add to D_S ( batch of 50 )
@@ -255,7 +253,6 @@ class STransformer(nn.Module):
         # Spatial Transformer with attention part
 
         #Attention of (query + embedded linear adjacency)
-        #pdb.set_trace()
         query = query + D_S
 
 
@@ -408,7 +405,6 @@ class Encoder(nn.Module):
         #out_np2 = np.asarray(out[2][1])
         #np.savetxt("attention_out.csv", out_np, delimiter=",")
         #np.savetxt("attention_out1.csv", out_np, delimiter=",")
-        pdb.set_trace()
         return out
 
 
@@ -490,7 +486,7 @@ class STTransformer(nn.Module):
     def forward(self, x):
         # input x shape[ C, N, T]
         #C: Number of channels. N: The number of sensors. T: amount of time
-#         x = x.unsqueeze(0)
+
         # x shape: torch.Size(      [50, 1, 25, 12]) ,   in_channel=1, embed_size=64
         # input_Transformer shape: [50, 64, 25, 12]
         x1 = x[0]
@@ -499,9 +495,7 @@ class STTransformer(nn.Module):
 
         #input_Transformer1 = self.conv1(x1)
         #Conv2d(1, 64, kernel_size=(1, 1), stride=(1, 1))
-        #import pdb; pdb.set_trace()
-#         input_Transformer = input_Transformer.squeeze(0)
-#         input_Transformer = input_Transformer.permute(1, 2, 0)
+
         input_Transformer = input_Transformer.permute(0, 2, 3, 1)
         #input_Transformer shape becomes ([50, 25, 12, 64])
 
@@ -510,17 +504,15 @@ class STTransformer(nn.Module):
         output_Transformer = self.Transformer(input_Transformer, self.forward_expansion)  # [B, N, T, C]
         output_Transformer = output_Transformer.permute(0, 2, 1, 3)
         #output_Transformer shape[B, T, N, C]
-        # output_Transformer shape: [50, 12, 25, 64]
-#         output_Transformer = output_Transformer.unsqueeze(0)
 
         # OUTPUT of transformer; Input to prediction
         out = self.relu(self.conv2(output_Transformer))    # Conv2d(T_dim = 12, output_T_dim = 12, 1)  - out shape: [1, output_T_dim, N, C]
-        import pdb; pdb.set_trace()
+
         after_relu__matrix=np.array(out[0][0])
         plt.imshow(after_relu__matrix, vmin=0, vmax=1.5, cmap='Greens')
         plt.colorbar()
         plt.show()
-        import pdb; pdb.set_trace()
+
         out = out.permute(0, 3, 2, 1)           # out shape: [50, 64, 25, 12]- out shape: [B, C, N, output_T_dim]
         # out shape: [50, 64, 25, 12]
 
@@ -530,7 +522,7 @@ class STTransformer(nn.Module):
 
         out = out.squeeze(1)
         # out shape: [50, 25, 12])
-        import pdb; pdb.set_trace()
+
         output_matrix=np.array(out[0])
         plt.imshow(output_matrix, vmin=0, vmax=0.5, cmap='Blues')
         plt.colorbar()
