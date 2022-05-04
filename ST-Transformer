@@ -13,6 +13,7 @@ import pdb
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#The dot product attention class
 class ScaledDotProductAttention(nn.Module):
     def __init__(self):
         super(ScaledDotProductAttention, self).__init__()
@@ -22,7 +23,7 @@ class ScaledDotProductAttention(nn.Module):
         Q: [batch_size, n_heads, T(Spatial) or N(Temporal), N(Spatial) or T(Temporal), d_k]
         K: [batch_size, n_heads, T(Spatial) or N(Temporal), N(Spatial) or T(Temporal), d_k]
         V: [batch_size, n_heads, T(Spatial) or N(Temporal), N(Spatial) or T(Temporal), d_k]
-        attn_mask: [batch_size, n_heads, seq_len, seq_len] 可能没有
+        attn_mask: [batch_size, n_heads, seq_len, seq_len] 
         '''
         B, n_heads, len1, len2, d_k = Q.shape
         scores = torch.matmul(Q, K.transpose(-1, -2)) / np.sqrt(d_k)
@@ -37,109 +38,6 @@ class ScaledDotProductAttention(nn.Module):
                 np.savetxt(f, out_np, delimiter=",")
 
         context = torch.matmul(attn, V) # [batch_size, n_heads, T(Spatial) or N(Temporal), N(Spatial) or T(Temporal), d_k]]
-        if count==1:
-            if attn[0][0][0].shape[0]==25:
-                print("temporal attn 1")
-                # attn_matrix=np.array(attn[0][0][0])
-                # np.savetxt("temporal_attn.csv", attn_matrix, delimiter=",")
-                # plt.imshow(attn_matrix, vmin=0, vmax=0.2, cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-            if attn[0][0][0].shape[0]==64: #previously 64
-                print("spatial attn 1")
-                attn_matrix=np.array(attn[0][0][0])
-                attn_matrix1=np.array(attn[0][1][0])
-                np.savetxt("spatial_attn.csv", attn_matrix, delimiter=",")
-                plt.imshow(attn_matrix, vmin=0, vmax=0.030, cmap='Greys')
-                plt.colorbar()
-                plt.show()
-                print("spatial attn 1 head 2")
-                plt.imshow(attn_matrix1, vmin=0, vmax=0.030, cmap='Greys')
-                plt.colorbar()
-                plt.show()
-        if count==2:
-            if attn[0][0][0].shape[0]==25:
-                print("temporal attn 2")
-                # attn_matrix=np.array(attn[0][0][0])
-                # np.savetxt("temporal_attn.csv", attn_matrix, delimiter=",")
-                # plt.imshow(attn_matrix, vmin=0, vmax=0.2, cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-            if attn[0][0][0].shape[0]==64:
-                print("spatial attn 2")
-                attn_matrix=np.array(attn[0][0][0])
-                attn_matrix1=np.array(attn[0][1][0])
-                #np.savetxt("spatial_attn.csv" , attn_matrix, delimiter=",")
-                plt.imshow(attn_matrix, vmin=0, vmax=0.030, cmap='Greys')
-                plt.colorbar()
-                plt.show()
-                print("spatial attn 2 head 2")
-                plt.imshow(attn_matrix1, vmin=0, vmax=0.030, cmap='Greys')
-                plt.colorbar()
-                plt.show()
-        if count==3:
-            if attn[0][0][0].shape[0]==25:
-                print("temporal attn 3")
-                # attn_matrix=np.array(attn[0][0][0])
-                # attn_matrix1=np.array(attn[0][0][1])
-                # attn_matrix2=np.array(attn[0][0][2])
-                # attn_matrix3=np.array(attn[0][0][3])
-                # attn_matrix3=np.array(attn[0][0][4])
-                # np.savetxt("temporal_attn.csv", attn_matrix, delimiter=",")
-                # plt.imshow(attn_matrix, vmin=0, vmax=0.2, cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-                # plt.imshow(attn_matrix1, vmin=0, vmax=0.2, cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-                # plt.imshow(attn_matrix - attn_matrix1, vmin=0, vmax=0.2, cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-                # plt.imshow(attn_matrix2, vmin=0, vmax=0.2, cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-                # plt.imshow(attn_matrix3, vmin=0, vmax=0.2, cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-            if attn[0][0][0].shape[0]==64:
-                print("spatial attn 3")
-                attn_matrix=np.array(attn[0][0][0])
-                np.savetxt("attn_41_results.csv", attn[0][0][0], delimiter=",")
-                np.savetxt("spatial_attn.csv", attn_matrix, delimiter=",")
-                attn_matrix=np.array(attn[0][0][0])
-                attn_matrix1=np.array(attn[0][1][0])
-                # attn_matrix2=np.array(attn[0][0][2])
-                # attn_matrix3=np.array(attn[0][0][3])
-                # attn_matrix3=np.array(attn[0][0][4])
-                np.savetxt("temporal_attn.csv", attn_matrix, delimiter=",")
-                plt.imshow(attn_matrix, vmin=0, vmax=0.030, cmap='Greys')
-                plt.colorbar()
-                plt.show()
-                print("spatial attn 3 head 2")
-                plt.imshow(attn_matrix1, vmin=0, vmax=0.030, cmap='Greys')
-                plt.colorbar()
-                plt.show()
-                # plt.imshow(attn_matrix1,  cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-                # plt.imshow(attn_matrix - attn_matrix1, cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-                # plt.imshow(attn_matrix2,  cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-                # plt.imshow(attn_matrix3,  cmap='Greys')
-                # plt.colorbar()
-                # plt.show()
-        if count==4:
-            if attn[0][0][0].shape[0]==64:
-                print("spatial attn 4")
-                attn_matrix=np.array(attn[0][0][0])
-                plt.imshow(attn_matrix, vmin=0, vmax=0.030, cmap='Greys')
-                plt.colorbar()
-                plt.show()
-
-
         return context
 
 
