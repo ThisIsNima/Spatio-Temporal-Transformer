@@ -267,10 +267,8 @@ class TTransformer(nn.Module):
     def __init__(self, embed_size, heads, time_num, dropout, forward_expansion):
         super(TTransformer, self).__init__()
 
-        # Temporal embedding One hot
         self.time_num = time_num
-#         self.one_hot = One_hot_encoder(embed_size, time_num)          # temporal embedding选用one-hot方式 或者
-        self.temporal_embedding = nn.Embedding(time_num, embed_size)  # temporal embedding选用nn.Embedding
+        self.temporal_embedding = nn.Embedding(time_num, embed_size) 
 
 
 
@@ -288,13 +286,10 @@ class TTransformer(nn.Module):
     def forward(self, value, key, query, t, count):
         B, N, T, C = query.shape
 
-        #D_T = self.one_hot(t, N, T)                          # temporal embedding选用one-hot方式 或者
-        #D_T = self.temporal_embedding(torch.arange(0, T).to('cuda:0'))    # temporal embedding选用nn.Embedding
         D_T = self.temporal_embedding(torch.arange(0, T))
         D_T = D_T.expand(B, N, T, C)
 
 
-        # temporal embedding加到query。 原论文采用concatenated
         query = query + D_T
         # concatenate temporal embedding and query
         print ("count")
