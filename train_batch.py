@@ -74,29 +74,6 @@ if __name__ == '__main__':
 
     import pdb; pdb.set_trace()
 
-    # for j in range(50):
-    #     Autism_41_new[j] = Total_Autism_41[k:k+116]
-    #     k = k+117;
-    # Autism_41_new1 = Autism_41_new.reshape((1, 50, 116, 1, 25))
-    # Autism_41_new1 = Autism_41_new1.tolist()
-    # Autism_41_new2 = Autism_41_new1
-    # Autism_41_new2[0] = torch.Tensor(Autism_41_new2[0])
-    #
-    # import pdb; pdb.set_trace()
-
-    # Autism_41_new1 = Autism_41_new.reshape((1, 50, 64, 25))
-    # Autism_41_new1 = Autism_41_new1.tolist()
-    # Autism_41_new3 = Autism_41_new1
-    # Autism_41_new3[0] = torch.Tensor(Autism_41_new3[0])
-    # import pdb; pdb.set_trace()
-    # Autism_41_new2 = torch.cat((Autism_41_new2, Autism_41_new3))
-    # Autism_41_new2[1] = torch.Tensor(Autism_41_new3[0])
-
-
-    # [50, 1, 25, 12]
-    # (50, 1, 64, 25)
-    # (50, 64, 25) <class 'numpy.ndarray'>
-
 
 
     # for batch_index, batch_data in enumerate(train_loader):
@@ -113,7 +90,7 @@ if __name__ == '__main__':
     import pdb; pdb.set_trace()
 
 
-    # full brain stuff
+    # full brain analysis
     # adj_full_brain = pd.read_csv('./PEMSD7/Euclidean_adj.csv', header = None)
     # #X_G = torch.Tensor(B, N,  0, C).to('cuda:0')
     # adj_full_brain=torch.Tensor(np.array(adj_full_brain))
@@ -153,22 +130,8 @@ if __name__ == '__main__':
         forward_expansion,
         dropout)
 
-    # net = STTransformer_sinembedding(
-    #     A,
-    #     in_channels,
-    #     embed_size,
-    #     time_num,
-    #     num_layers,
-    #     T_dim,
-    #     output_T_dim,
-    #     heads,
-    #     cheb_K,
-    #     forward_expansion, dropout)
 
-    # data = load('./PEMSD7/V_25_r1_d0_w0_astcgn.npz')
-    # lst = data.files
-    # #for item in lst:
-    #     #pdb.set_trace()
+
     net.to(device)
     ### Training Process
     #### Load the parameter we have already learnt if start_epoch does not equal to 0
