@@ -38,7 +38,7 @@ class ScaledDotProductAttention(nn.Module):
         return context
 
 
-
+#Spatial attention class
 class SpatialMultiHeadAttention(nn.Module):
     def __init__(self, embed_size, heads):
         super(SpatialMultiHeadAttention, self).__init__()
@@ -79,6 +79,7 @@ class SpatialMultiHeadAttention(nn.Module):
         output = self.fc_out(context) # [batch_size, len_q, d_model]
         return output
 
+#Temporal attention class
 class TMultiHeadAttention(nn.Module):
     def __init__(self, embed_size, heads):
         super(TMultiHeadAttention, self).__init__()
@@ -124,7 +125,7 @@ class TMultiHeadAttention(nn.Module):
         return output
 
 
-
+#Spatial transformer class
 class STransformer(nn.Module):
     def __init__(self, embed_size, heads, adj, cheb_K, dropout, forward_expansion):
         super(STransformer, self).__init__()
@@ -262,7 +263,7 @@ class STransformer(nn.Module):
 
         return out #(B, N, T, C)
 
-
+#Temporal transformer class
 class TTransformer(nn.Module):
     def __init__(self, embed_size, heads, time_num, dropout, forward_expansion):
         super(TTransformer, self).__init__()
@@ -305,7 +306,7 @@ class TTransformer(nn.Module):
 
 
 
-### STBlock
+#Spatio-temporal (ST) transformer block
 
 class STTransformerBlock(nn.Module):
     def __init__(self, embed_size, heads, adj, time_num, cheb_K, dropout, forward_expansion):
@@ -426,7 +427,7 @@ class Transformer(nn.Module):
         return enc_src # [B, N, T, C]
 
 
-### ST Transformer: Total Model
+### ST Transformer model
 
 class STTransformer(nn.Module):
     def __init__(
